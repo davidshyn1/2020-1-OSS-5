@@ -1,5 +1,5 @@
 # Site settings
-title:          OSS-6
+title:          OSS-5
 description:    "Minimal Jekyll theme for storytellers"
 baseurl:
 url:            "https://20-1-skku-oss.github.io/2020-1-OSS-5"
@@ -11,7 +11,7 @@ google_analytics: UA—XXXXXXXX-X
 
 # Author
 author:
-  name:         OSS-6
+  name:         OSS-5
   url:          https://github.com/20-1-SKKU-OSS/2020-1-OSS-5
 
 # Build settings
