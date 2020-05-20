@@ -5,22 +5,18 @@ Homepage : https://20-1-skku-oss.github.io/2020-1-OSS-5/
 - 신성국
 - 안정복
 - 이하은
-- 유광호
+- 유광호 
 
 ## 2. 프로젝트 소개
-### word_cloud
+### word_cloud (https://github.com/amueller/word_cloud)
+
 - 텍스트 내의 단어들을 중요도(문서 내 등장횟수)를 기준으로 구분하여 특정한 이미지 영역(mask) 내부에 시각화하는 프로젝트
-
-
-https://github.com/amueller/word_cloud
 
 ![example][example]
 
 
-### free-python-games
+### free-python-games (https://github.com/grantjenks/free-python-games)
  - 파이썬으로 구현하는 여러 미니게임 프로젝트
- 
- https://github.com/grantjenks/free-python-games
 
 #### Snake
 ![example1][example1]
