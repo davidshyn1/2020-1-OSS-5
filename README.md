@@ -29,7 +29,7 @@ conda 사용 시, 'conda-forge'를 이용하여 설치하시기 바랍니다:
 
 #### 설치 시 주의사항
 
-wordcloud은 'numpy'와 'pillow' 패키지를 사용하기 때문에, 사전에 설치해야 합니다.
+wordcloud은 `numpy`와 `pillow` 패키지를 사용하기 때문에, 사전에 설치해야 합니다.
 
 wordcloud 수행 후 해당 이미지를 저장학 위해서는, `matplotlib` 패키지 또한 설치해야 합니다.
 
