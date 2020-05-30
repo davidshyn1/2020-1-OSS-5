@@ -15,7 +15,7 @@ def listToString(list1):
     str=" " #distinguish nouns by 'space'
     return (str.join(list1))
 
-def get_string():
+def get_string(path):
     f = open(path, "r", encoding="utf-8")
     sample = f.read()
     f.close()
@@ -24,7 +24,7 @@ def get_string():
     return listToString(list_nouns) #get string of list_nouns
 
 path = d + "텍스트파일.txt"
-tags = get_string()  # tags : string of list_nouns
+tags = get_string(path)  # tags : string of list_nouns
 
 wc = WordCloud(font_path=font_path, background_color="white")
 draw_wc = wc.generate(tags)
