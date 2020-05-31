@@ -47,3 +47,4 @@ wordcloud 수행 후 해당 이미지를 저장학 위해서는, `matplotlib` �
 
 [example]: https://github.com/amueller/word_cloud/blob/master/examples/alice.png
 [example1]: https://github.com/amueller/word_cloud/raw/master/examples/constitution.png
+
