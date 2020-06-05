@@ -1,4 +1,5 @@
 import os
+
 from os import path
 from konlpy.tag import Hannanum
 from wordcloud import WordCloud
@@ -6,10 +7,13 @@ from wordcloud import WordCloud
 # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
+
+#get the path of Korean_fonts otf file
 font_path = d + '/word_cloud/examples/fonts/NotoSansKR/NotoSansKR-Black.otf'
 
 def listToString(list1):
-    str=" " #distinguish by 'space'
+    str=" " #distinguish nouns by 'space'
+
     return (str.join(list1))
 
 def get_string(path):
