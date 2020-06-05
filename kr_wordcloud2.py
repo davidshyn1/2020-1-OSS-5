@@ -17,6 +17,10 @@ For this reason, even though the text want to say 'I' in every appearance as 'ë‚
 the original codes will separate these words as a different meaning and a different word.
 '"""
 
+"""To implement the codes, you must install konlpy package which is a module for natural language processing for Korean.
+It provides a function with separating the main words and articles, and only extract the main words."""
+
+"""So remember, not forget installing konlpy package!"""
 # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
