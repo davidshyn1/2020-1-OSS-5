@@ -86,5 +86,54 @@ Out:
     
 **Script의 총 실행 시간:** ( 0 분  0.929 초)
 
+<hr>
+
+
+Minimal Example
+===========
+
+기본 인수를 사용하여 직각의 미국 헌법 wordcloud 생성
+
+![example1][example1]
+
+
+![example2][example2]
+    
+    import os
+
+    from os import path
+    from wordcloud import WordCloud
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    # Read the whole text.
+    text = open(path.join(d, 'constitution.txt')).read()
+
+    # Generate a word cloud image
+    wordcloud = WordCloud().generate(text)
+
+    # Display the generated image:
+    # the matplotlib way:
+    import matplotlib.pyplot as plt
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+
+    # lower max_font_size
+    wordcloud = WordCloud(max_font_size=40).generate(text)
+    plt.figure()
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+    # The pil way (if you don't have matplotlib)
+    # image = wordcloud.to_image()
+    # image.show()
+
+
+**Script의 총 실행 시간:** ( 0 분  1.024 초)
+
 [example]: http://amueller.github.io/word_cloud/_images/sphx_glr_single_word_001.png
+[example1]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_001.png
+[example2]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_002.png
 [GoE]: http://amueller.github.io/word_cloud/auto_examples/index.html
