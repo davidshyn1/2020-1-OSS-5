@@ -20,12 +20,14 @@ def get_string(path):
     list_nouns = h.nouns(sample) #get list of nouns from sample
     return listToString(list_nouns) #get string of list_nouns
 
-path = "text파일.txt"
+path = d + '/word_cloud/kor_text/황순원_소나기.txt'
 tags = get_string(path)  # tags : string of list_nouns
-wc = WordCloud(font_path=font_path, background_color="white",
+wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
                max_font_size=100, random_state=42, width=1000, height=860, margin=2)
 
 #display the generated image
+wordcloud = wc.generate(tags)
 import matplotlib.pyplot as plt
-plt.imshow(wc, interpolation ='bilnear')
+plt.imshow(wordcloud, interpolation ='bilinear')
 plt.axis("off")
+plt.show()
