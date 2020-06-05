@@ -25,3 +25,7 @@ tags = get_string(path)  # tags : string of list_nouns
 wc = WordCloud(font_path=font_path, background_color="white",
                max_font_size=100, random_state=42, width=1000, height=860, margin=2)
 
+#display the generated image
+import matplotlib.pyplot as plt
+plt.imshow(wc, interpolation ='bilnear')
+plt.axis("off")
