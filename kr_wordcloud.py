@@ -1,6 +1,7 @@
 import os
 
 from os import path
+from imageio import imread
 from konlpy.tag import Hannanum
 from wordcloud import WordCloud, ImageColorGenerator
 
@@ -26,6 +27,9 @@ It provides a function with separating the main words and articles, and only ext
 # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
+#read the color image taken from
+back_coloring = imread(path.join(d, d + '/word_cloud/kor_text/image/나뭇잎.jpg'))
+
 
 #get the path of Korean_fonts otf file
 font_path = d + '/word_cloud/examples/fonts/NotoSansKR/NotoSansKR-Black.otf'
@@ -46,7 +50,7 @@ def get_string(path):
 path = d + '/word_cloud/kor_text/2020.05.28.기사1.txt' #path of korean text
 
 tags = get_string(path)  # tags : string of list_nouns
-wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
+wc = WordCloud(font_path=font_path, background_color="white",collocations=False, mask=back_coloring,
                max_font_size=100, random_state=42, width=1000, height=860, margin=2) #collocations=false
 
 #display the generated image
