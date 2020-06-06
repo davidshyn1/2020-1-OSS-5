@@ -132,8 +132,63 @@ Minimal Example
 
 
 **Script의 총 실행 시간:** ( 0 분  1.024 초)
+<hr>
+
+
+차폐된 Wordcloud (Masked wordcloud)
+===========
+Mask를 사용하면 임의의 모양으로 word cloud를 생성할 수 있습니다
+
+![example3][example3]
+
+
+![example4][example4]
+
+    from os import path
+    from PIL import Image
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import os
+
+    from wordcloud import WordCloud, STOPWORDS
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    # Read the whole text.
+    text = open(path.join(d, 'alice.txt')).read()
+
+    # read the mask image
+    # taken from
+    # http://www.stencilry.org/stencils/movies/alice%20in%20wonderland/255fk.jpg
+    alice_mask = np.array(Image.open(path.join(d, "alice_mask.png")))
+
+    stopwords = set(STOPWORDS)
+    stopwords.add("said")
+
+    wc = WordCloud(background_color="white", max_words=2000, mask=alice_mask,
+                   stopwords=stopwords, contour_width=3, contour_color='steelblue')
+
+    # generate word cloud
+    wc.generate(text)
+
+    # store to file
+    wc.to_file(path.join(d, "alice.png"))
+
+    # show
+    plt.imshow(wc, interpolation='bilinear')
+    plt.axis("off")
+    plt.figure()
+    plt.imshow(alice_mask, cmap=plt.cm.gray, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
+
+
+**Script의 총 실행 시간:** ( 0 분  5.110 초)
 
 [example]: http://amueller.github.io/word_cloud/_images/sphx_glr_single_word_001.png
 [example1]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_001.png
 [example2]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_002.png
+[example3]: http://amueller.github.io/word_cloud/_images/sphx_glr_masked_001.png
+[example4]: http://amueller.github.io/word_cloud/_images/sphx_glr_masked_002.png
 [GoE]: http://amueller.github.io/word_cloud/auto_examples/index.html
