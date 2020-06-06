@@ -47,7 +47,7 @@ def get_string(path):
     list_nouns = h.nouns(sample) #get list of nouns from sample
     return listToString(list_nouns) #get string of list_nouns
 
-path = d + '/word_cloud/kor_text/2020.05.28.기사1.txt' #path of korean text
+path = d + '/word_cloud/kor_text/황순원_소나기.txt' #path of korean text
 
 tags = get_string(path)  # tags : string of list_nouns
 wc = WordCloud(font_path=font_path, background_color="white",collocations=False, mask=back_coloring,
@@ -56,6 +56,9 @@ wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
 #display the generated image
 wordcloud = wc.generate(tags)
 import matplotlib.pyplot as plt
+
 plt.imshow(wordcloud, interpolation ='bilinear')
+#image_colors_byImg = ImageColorGenerator(back_coloring)
+#plt.imshow(wordcloud.recolor(color_func=image_colors_byImg), interpolation='bilinear')
 plt.axis("off")
 plt.show()
