@@ -1,41 +1,63 @@
-from collections import Counter
-import urllib
-import random
-import webbrowser
+import os
+
+from os import path
 from konlpy.tag import Hannanum
-from lxml import html
-import pytagcloud
-import sys
+from wordcloud import WordCloud
 
-if sys.version_info[0] >=3:
-    urlopen = urllib.request.urlopen
+"""This code is to generate and to plot a wordcloud in Korean version. 
+Of course it is possible to generate a simple wordcloud with the original codes, however
+due to the major difference with English and complexity, the result from the original codes will not
+be as perfect as we expected.
 
+The major difference between English and Korean(Hangul) is that English can divide words by space(' ')
+while Korean cannot divide words by space. To make a Korean sentence, every single noun has to combine with
+articles without space(ex. I am --> 나는, 나:I 는:am).
 
-r = lambda: random.randint(0,255)
-color = lambda: (r(), r(), r())
+For this reason, even though the text want to say 'I' in every appearance as '나는','나를', '나에게',
+the original codes will separate these words as a different meaning and a different word.
+'"""
 
-def get_bill_text(billnum):
-    url = 'http://pokr.kr/bill/%s/text' % billnum
-    response = urlopen(url).read().decode('udf-8')
-    page = html.fromstring(response)
-    text = page.xpath(".//div[@id='bill-secions']/pre/text()")
-    return text
+"""To implement the codes, you must install konlpy package which is a module for natural language processing for Korean.
+It provides a function with separating the main words and articles, and only extract the main words."""
 
-def get_tags(text, ntags=50, multiplier=10):
-    h=Hannanum()
-    nouns = h.nouns(text)
-    count = Counter(nouns)
-    return [{'color': color(), 'tag': n, 'size': c*multiplier }\
-            for n, c in count.most_common(ntags)]
-
-def draw_cloud(tags, filename, fontname='Noto Sans CJK', size = (800,600)):
-    pytagcloud.create_tag_image(tags, filename, fontname=fontname, size=size)
-    webbrowser.open(filename)
-
-bill_num = '1904882'
-text = get_bill_text(bill_num)
-tags = get_tags(text)
-print(tags)
-draw_cloud(tags, 'wordcloud.png')
+"""So don't forget to install konlpy package!"""
+# get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
 
+#get the path of Korean_fonts otf file
+font_path = d + '/word_cloud/examples/fonts/NotoSansKR/NotoSansKR-Black.otf'
+
+# the path to save worldcloud
+imgname1 = d + '/word_cloud/kor_text/image/leaves.jpg'
+imgname2 = d + '/word_cloud/kor_text/image/leaves_colored.jpg'
+# read the mask / color image taken from
+back_coloring = imread(path.join(d, d + '/word_cloud/kor_text/image/leaves_color.jpg'))
+
+def listToString(list1):
+    str=" " #distinguish nouns by 'space'
+
+    return (str.join(list1))
+
+def get_string(path):
+    f = open(path, "r", encoding="utf-8")
+    sample = f.read()
+    f.close()
+    h = Hannanum()
+    list_nouns = h.nouns(sample) #get list of nouns from sample
+    return listToString(list_nouns) #get string of list_nouns
+
+path = d + '/word_cloud/kor_text/황순원_소나기.txt'
+
+tags = get_string(path)  # tags : string of list_nouns
+wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
+               max_font_size=100, random_state=42, width=1000, height=860, margin=2)
+
+#display the generated image
+wordcloud = wc.generate(tags)
+# create coloring from image
+image_colors_default = ImageColorGenerator(back_coloring)
+import matplotlib.pyplot as plt
+plt.imshow(wordcloud, interpolation ='bilinear')
+plt.axis("off")
+plt.show()
