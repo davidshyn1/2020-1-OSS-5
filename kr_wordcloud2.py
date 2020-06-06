@@ -18,9 +18,11 @@ the original codes will separate these words as a different meaning and a differ
 '"""
 
 """To implement the codes, you must install konlpy package which is a module for natural language processing for Korean.
+
 It provides a function with separating the main words and articles, and only extract the main words."""
 
 """So don't forget to install konlpy package!"""
+
 # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
@@ -41,11 +43,11 @@ def get_string(path):
     list_nouns = h.nouns(sample) #get list of nouns from sample
     return listToString(list_nouns) #get string of list_nouns
 
-path = d + '/word_cloud/kor_text/2020.05.28.기사1.txt'
+path = d + '/word_cloud/kor_text/2020.05.28.기사1.txt' #path of korean text
 
 tags = get_string(path)  # tags : string of list_nouns
 wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
-               max_font_size=100, random_state=42, width=1000, height=860, margin=2)
+               max_font_size=100, random_state=42, width=1000, height=860, margin=2) #collocations=false
 
 #display the generated image
 wordcloud = wc.generate(tags)
