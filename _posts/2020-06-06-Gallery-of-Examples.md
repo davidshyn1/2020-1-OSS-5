@@ -185,10 +185,119 @@ Mask를 사용하면 임의의 모양으로 word cloud를 생성할 수 있습�
 
 
 **Script의 총 실행 시간:** ( 0 분  5.110 초)
+<hr>
+
+
+사용 빈도 (Using frequency)
+===========
+단어 빈도 사전을 사용한다
+
+![example5][example5]
+
+
+    import multidict as multidict
+
+    import numpy as np
+
+    import os
+    import re
+    from PIL import Image
+    from os import path
+    from wordcloud import WordCloud
+    import matplotlib.pyplot as plt
+
+
+    def getFrequencyDictForText(sentence):
+        fullTermsDict = multidict.MultiDict()
+        tmpDict = {}
+
+        # making dict for counting frequencies
+        for text in sentence.split(" "):
+            if re.match("a|the|an|the|to|in|for|of|or|by|with|is|on|that|be", text):
+                continue
+            val = tmpDict.get(text, 0)
+            tmpDict[text.lower()] = val + 1
+        for key in tmpDict:
+            fullTermsDict.add(key, tmpDict[key])
+        return fullTermsDict
+
+
+    def makeImage(text):
+        alice_mask = np.array(Image.open("alice_mask.png"))
+
+        wc = WordCloud(background_color="white", max_words=1000, mask=alice_mask)
+        # generate word cloud
+        wc.generate_from_frequencies(text)
+
+        # show
+        plt.imshow(wc, interpolation="bilinear")
+        plt.axis("off")
+        plt.show()
+
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    text = open(path.join(d, 'alice.txt'), encoding='utf-8')
+    text = text.read()
+    makeImage(getFrequencyDictForText(text))
+
+**Script의 총 실행 시간:** ( 0 분  4.469 초)
+<hr>
+
+
+이미지 컬러 (Image-colored wordcloud)
+===========
+ImageColorGenerator에서 구현된 이미지 기반 색상 지정 방법을 사용하여 word cloud를 채색할 수 있습니다. 소스 이미지에서 단어가 차지하는 영역의 평균 색상을 사용합니다. 이것은 masking과 결합할 수 있습니다. 순수한 흰색은 mask로 전달될 때 WordCloud 객체에서 '사용하지 않음'으로 해석됩니다. 법적 색상으로 흰색을 원할 경우 다른 이미지를 "마스크"에 전달하기만 하면 되지만 이미지 모양이 정렬되도록 하십시오.
+
+![example6][example6]
+
+    from os import path
+    from PIL import Image
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import os
+
+    from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    # Read the whole text.
+    text = open(path.join(d, 'alice.txt')).read()
+
+    # read the mask / color image taken from
+    # http://jirkavinse.deviantart.com/art/quot-Real-Life-quot-Alice-282261010
+    alice_coloring = np.array(Image.open(path.join(d, "alice_color.png")))
+    stopwords = set(STOPWORDS)
+    stopwords.add("said")
+
+    wc = WordCloud(background_color="white", max_words=2000, mask=alice_coloring,
+                   stopwords=stopwords, max_font_size=40, random_state=42)
+    # generate word cloud
+    wc.generate(text)
+
+    # create coloring from image
+    image_colors = ImageColorGenerator(alice_coloring)
+
+    # show
+    fig, axes = plt.subplots(1, 3)
+    axes[0].imshow(wc, interpolation="bilinear")
+    # recolor wordcloud and show
+    # we could also give color_func=image_colors directly in the constructor
+    axes[1].imshow(wc.recolor(color_func=image_colors), interpolation="bilinear")
+    axes[2].imshow(alice_coloring, cmap=plt.cm.gray, interpolation="bilinear")
+    for ax in axes:
+        ax.set_axis_off()
+    plt.show()
+
+**Script의 총 실행 시간:** ( 0 분  3.193 초)
 
 [example]: http://amueller.github.io/word_cloud/_images/sphx_glr_single_word_001.png
 [example1]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_001.png
 [example2]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_002.png
 [example3]: http://amueller.github.io/word_cloud/_images/sphx_glr_masked_001.png
 [example4]: http://amueller.github.io/word_cloud/_images/sphx_glr_masked_002.png
+[example5]: http://amueller.github.io/word_cloud/_images/sphx_glr_frequency_001.png
+[example6]: http://amueller.github.io/word_cloud/_images/sphx_glr_colored_001.png
 [GoE]: http://amueller.github.io/word_cloud/auto_examples/index.html
