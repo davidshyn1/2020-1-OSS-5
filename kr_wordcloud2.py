@@ -18,7 +18,8 @@ the original codes will separate these words as a different meaning and a differ
 '"""
 
 """To implement the codes, you must install konlpy package which is a module for natural language processing for Korean.
-It provides a function with separating the main words and articles, and extracting only the main words."""
+
+It provides a function with separating the main words and articles, and only extract the main words."""
 
 """So don't forget to install konlpy package!"""
 
