@@ -2,7 +2,8 @@ import os
 
 from os import path
 from konlpy.tag import Hannanum
-from wordcloud import WordCloud
+from wordcloud import WordCloud, ImageColorGenerator
+from imageio import imread
 
 """This code is to generate and to plot a wordcloud in Korean version. 
 Of course it is possible to generate a simple wordcloud with the original codes, however
@@ -24,15 +25,13 @@ It provides a function with separating the main words and articles, and only ext
 # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
-
 #get the path of Korean_fonts otf file
 font_path = d + '/word_cloud/examples/fonts/NotoSansKR/NotoSansKR-Black.otf'
 
 # the path to save worldcloud
-imgname1 = d + '/word_cloud/kor_text/image/leaves.jpg'
-imgname2 = d + '/word_cloud/kor_text/image/leaves_colored.jpg'
+imgname1 = d + '/word_cloud/kor_text/image/leaves_colored.jpg'
 # read the mask / color image taken from
-back_coloring = imread(path.join(d, d + '/word_cloud/kor_text/image/leaves_color.jpg'))
+back_coloring = imread(path.join(d, d+'/word_cloud/kor_text/image/나뭇잎.jpg'))
 
 def listToString(list1):
     str=" " #distinguish nouns by 'space'
@@ -50,14 +49,17 @@ def get_string(path):
 path = d + '/word_cloud/kor_text/황순원_소나기.txt'
 
 tags = get_string(path)  # tags : string of list_nouns
-wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
+wc = WordCloud(font_path=font_path, background_color="white",collocations=False, mask=back_coloring,
                max_font_size=100, random_state=42, width=1000, height=860, margin=2)
 
 #display the generated image
 wordcloud = wc.generate(tags)
 # create coloring from image
-image_colors_default = ImageColorGenerator(back_coloring)
+image_colors_byImg = ImageColorGenerator(back_coloring)
+
 import matplotlib.pyplot as plt
-plt.imshow(wordcloud, interpolation ='bilinear')
+# recolor wordcloud and show
+# we could also give color_func=image_colors directly in the constructor
+plt.imshow(wc.recolor(color_func=image_colors_byImg), interpolation="bilinear")
 plt.axis("off")
 plt.show()
