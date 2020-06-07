@@ -80,21 +80,21 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
   * 조사한 프로젝트 중 [word_cloud][word_cloud]와 [free-python-games][free-python-games]로 의견을 종합 (5/13)
   * 하나의 주제로 팀 프로젝트를 진행한다는 답변을 받아, 추가 회의를 통해 word_cloud를 팀 프로젝트로 선정 (5/22)
 ### 한글로 word_cloud 구현
-  * 한글 wordcloud 구현을 위한 준비 - 저장소에 한글 기사와 소설 업로드 및 한글 글꼴 파일(NotoSansKR, GmarketSans) 추가<br>
-  * konlpy 라이브러리를 활용하여 주어진 텍스트 파일에서 단어 추출 / 띄어쓰기 단위로 구분한 후 하나의 텍스트파일로 다시 구성<br>
-  * kr_wordcloud2.py 일부 수정 및 추가 구현<br>
+  * 한글 wordcloud 구현을 위한 준비 - 저장소에 한글 기사와 소설 업로드 및 한글 글꼴 파일(NotoSansKR, GmarketSans) 추가 (5/30)
+  * konlpy 라이브러리를 활용하여 주어진 텍스트 파일에서 단어를 추출하고 띄어쓰기 단위로 구분하여 하나의 텍스트 파일로 다시 구성 (~5/30)
+  * kr_wordcloud2.py 일부 수정 및 추가 구현 (~5/30)
 > 1. Hannaum --> Hannanum<br>
 > 2. ListtoString의 str= " " (띄어쓰기 추가)<br>
 > 3. font path 추가<br>
 > 4. wordcloud 함수 추가<br>
   * wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
-> 소설 소나기와 기사 text wordcloud 구현 예시<br>
+> 소설 소나기의 wordcloud 구현 예시<br>
 > ![leaves][leaves]
 ### word_cloud 한글 문서화
-Blog Post 앞 부분 한글 문서화 진행[(click)] (5.31)<br>
-README.md Installation / word_cloud website의 Command Line Interface 항목 한글 문서화[(click)] (6.4)<br>
-word_cloud website의 Gallery of Examples 한글 문서화[(click)] (6.6)<br>
-Blog Post 뒷 부분 한글 문서화[(click)] (6.7)
+Blog Post 앞 부분 한글 문서화 진행[(click)][doc1] (5.31)<br>
+README.md Installation / word_cloud website의 Command Line Interface 항목 한글 문서화[(click)][doc2] (6.4)<br>
+word_cloud website의 Gallery of Examples 한글 문서화[(click)][doc3] (6.6)<br>
+Blog Post 뒷 부분 한글 문서화[(click)][doc4] (6.7)
 ### Readme/Wiki/정적페이지 관리
 README.md에 word_cloud 설치 방법 추가 (5.28)<br>
 README.md에 프로젝트 기여 방법 구체화 (6.6)<br>
@@ -108,3 +108,7 @@ README.md에 프로젝트 기여 방법 구체화 (6.6)<br>
 [word_cloud]: https://github.com/amueller/word_cloud
 [free-python-games]: https://github.com/grantjenks/free-python-games
 [leaves]: https://github.com/jb0307/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EB%82%98%EB%AD%87%EC%9E%8E%EB%B9%84%EA%B5%90.jpg
+[doc1]: https://20-1-skku-oss.github.io/2020-1-OSS-5/blog-post/
+[doc2]: https://20-1-skku-oss.github.io/2020-1-OSS-5/installation-and-command-line-interface
+[doc3]: https://20-1-skku-oss.github.io/2020-1-OSS-5/Gallery-of-Examples/
+[doc4]: https://20-1-skku-oss.github.io/2020-1-OSS-5/blog-post-2/
