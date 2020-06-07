@@ -86,4 +86,4 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
 [issue1]: https://github.com/amueller/word_cloud/issues/238
 [example2]: https://github.com/davidshyn1/davidshyn1.github.io/blob/master/assets/img/word_cloud%ED%95%9C%EA%B8%80%EB%B2%84%EC%A0%84.png
 [issue2]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/issues/2
-[knolpy]: https://github.com/konlpy/konlpy
+[konlpy]: https://github.com/konlpy/konlpy
