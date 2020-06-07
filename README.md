@@ -96,9 +96,9 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
 * word_cloud website의 Gallery of Examples 항목 한글 문서화[(click)][doc3] (~6/6)<br>
 * Blog Post 뒷 부분 한글 문서화[(click)][doc4] (~6/7)
 ### #3 Readme/Wiki/정적페이지 관리
-* README.md에 word_cloud 설치 방법 추가 (~5/28)<br>
-* README.md에 프로젝트 기여 방법 구체화 (~6/6)<br>
-* 정적페이지 게시물 분류의 필요성으로 Jekyll Theme 변경 (~6/7)
+* README.md에 word_cloud 설치 방법 추가 (5/28)<br>
+* README.md에 프로젝트 기여 방법 구체화 (6/6)<br>
+* 정적페이지 게시물 분류의 필요성으로 Jekyll Theme 변경 (6/7)
 
 [example]: https://github.com/amueller/word_cloud/blob/master/examples/alice.png
 [issue1]: https://github.com/amueller/word_cloud/issues/238
