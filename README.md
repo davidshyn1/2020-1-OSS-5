@@ -79,7 +79,7 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
   * 회의를 통해 개인별로 조사한 프로젝트를 발표하고, 팀원들의 의견을 종합하여 프로젝트 선정 (~5/13)
   * 조사한 프로젝트 중 [word_cloud][word_cloud]와 [free-python-games][free-python-games]로 의견을 종합 (5/13)
   * 하나의 주제로 팀 프로젝트를 진행한다는 답변을 받아, 추가 회의를 통해 word_cloud를 팀 프로젝트로 선정 (5/22)
-### 한글로 word_cloud 구현
+### #1 한글로 word_cloud 구현
   * 한글 wordcloud 구현을 위한 준비 - 저장소에 한글 기사와 소설 업로드 및 한글 글꼴 파일(NotoSansKR, GmarketSans) 추가 (5/30)
   * konlpy 라이브러리를 활용하여 주어진 텍스트 파일에서 단어를 추출하고 띄어쓰기 단위로 구분하여 하나의 텍스트 파일로 다시 구성 (~5/30)
   * kr_wordcloud2.py 일부 수정 및 추가 구현 (~5/30)
@@ -90,12 +90,12 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
   * wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
 > 소설 소나기와 나뭇잎 이미지의 wordcloud 구현 예시<br>
 > ![leaves][leaves]
-### word_cloud 한글 문서화
+### #2 word_cloud 한글 문서화
 * Blog Post 앞 부분 한글 문서화 진행[(click)][doc1] (5/31)<br>
 * word_cloud website의 Command Line Interface 항목 한글 문서화[(click)][doc2] (6/4)<br>
 * word_cloud website의 Gallery of Examples 항목 한글 문서화[(click)][doc3] (6/6)<br>
 * Blog Post 뒷 부분 한글 문서화[(click)][doc4] (6/7)
-### Readme/Wiki/정적페이지 관리
+### #3 Readme/Wiki/정적페이지 관리
 * README.md에 word_cloud 설치 방법 추가 (5/28)<br>
 * README.md에 프로젝트 기여 방법 구체화 (6/6)<br>
 * 정적페이지 게시물 분류의 필요성으로 Jekyll Theme 변경 (6/7)
