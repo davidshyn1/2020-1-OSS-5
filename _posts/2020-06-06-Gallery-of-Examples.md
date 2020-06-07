@@ -292,6 +292,114 @@ ImageColorGenerator에서 구현된 이미지 기반 색상 지정 방법을 사
     plt.show()
 
 **Script의 총 실행 시간:** ( 0 분  3.193 초)
+<hr>
+
+
+이모티콘 예시 (Emoji Example)
+===========
+그림 이모티콘을 포함하는 방법을 보여주는 간단한 예입니다. 이 예제는 OS X에서는 작동하지 않지만 Ubuntu에서는 올바르게 작동합니다.
+
+그림 이모티콘을 포함하기 위해 따라야 할 3가지 중요한 단계가 있습니다. 1) built in open 대신 io.open으로 텍스트 입력을 읽습니다. 이렇게 하면 UTF-8으로 load됩니다. 2) Word cloud가 사용하는 정규식을 재정의하여 텍스트를 단어로 구문 분석합니다. 기본 표현식은 ASCII 단어와만 일치합니다. 3) 기본 글꼴을 그림 이모티콘을 지원하는 것으로 재정의합니다. 포함된 Symbola 글꼴에는 대부분의 이모티콘에 대한 흑백 윤곽선이 포함되어 있습니다. 현재 OS X (https://github.com/python-pillow/Pillow/issues/1774)에서 올바르게 작동하지 못하게 하는 PIL / Pillow 라이브러리에 문제가 있으므로, 문제가 있는 경우 우분투에서 시도하십시오.
+
+![example7][example7]
+
+    import io
+    import os
+    import string
+    from os import path
+    from wordcloud import WordCloud
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    # It is important to use io.open to correctly load the file as UTF-8
+    text = io.open(path.join(d, 'happy-emoji.txt')).read()
+
+    # the regex used to detect words is a combination of normal words, ascii art, and emojis
+    # 2+ consecutive letters (also include apostrophes), e.x It's
+    normal_word = r"(?:\w[\w']+)"
+    # 2+ consecutive punctuations, e.x. :)
+    ascii_art = r"(?:[{punctuation}][{punctuation}]+)".format(punctuation=string.punctuation)
+    # a single character that is not alpha_numeric or other ascii printable
+    emoji = r"(?:[^\s])(?<![\w{ascii_printable}])".format(ascii_printable=string.printable)
+    regexp = r"{normal_word}|{ascii_art}|{emoji}".format(normal_word=normal_word, ascii_art=ascii_art,
+                                                         emoji=emoji)
+
+    # Generate a word cloud image
+    # The Symbola font includes most emoji
+    font_path = path.join(d, 'fonts', 'Symbola', 'Symbola.ttf')
+    wc = WordCloud(font_path=font_path, regexp=regexp).generate(text)
+
+    # Display the generated image:
+    # the matplotlib way:
+    import matplotlib.pyplot as plt
+    plt.imshow(wc)
+    plt.axis("off")
+    plt.show()
+
+**Script의 총 실행 시간:** ( 0 분  0.539 초)
+<hr>
+
+
+맞춤 색상 사용 (Using custom colors)
+===========
+색상 변경 방법 및 사용자 지정 색상 기능 사용
+
+![example8][example8]
+![example9][example9]
+
+    import numpy as np
+    from PIL import Image
+    from os import path
+    import matplotlib.pyplot as plt
+    import os
+    import random
+
+    from wordcloud import WordCloud, STOPWORDS
+
+
+    def grey_color_func(word, font_size, position, orientation, random_state=None,
+                        **kwargs):
+        return "hsl(0, 0%%, %d%%)" % random.randint(60, 100)
+
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    # read the mask image taken from
+    # http://www.stencilry.org/stencils/movies/star%20wars/storm-trooper.gif
+    mask = np.array(Image.open(path.join(d, "stormtrooper_mask.png")))
+
+    # movie script of "a new hope"
+    # http://www.imsdb.com/scripts/Star-Wars-A-New-Hope.html
+    # May the lawyers deem this fair use.
+    text = open(path.join(d, 'a_new_hope.txt')).read()
+
+    # pre-processing the text a little bit
+    text = text.replace("HAN", "Han")
+    text = text.replace("LUKE'S", "Luke")
+
+    # adding movie script specific stopwords
+    stopwords = set(STOPWORDS)
+    stopwords.add("int")
+    stopwords.add("ext")
+
+    wc = WordCloud(max_words=1000, mask=mask, stopwords=stopwords, margin=10,
+                   random_state=1).generate(text)
+    # store default colored image
+    default_colors = wc.to_array()
+    plt.title("Custom colors")
+    plt.imshow(wc.recolor(color_func=grey_color_func, random_state=3),
+               interpolation="bilinear")
+    wc.to_file("a_new_hope.png")
+    plt.axis("off")
+    plt.figure()
+    plt.title("Default colors")
+    plt.imshow(default_colors, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+**Script의 총 실행 시간:** ( 0 분  7.464 초)
 
 [example]: http://amueller.github.io/word_cloud/_images/sphx_glr_single_word_001.png
 [example1]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_001.png
@@ -300,4 +408,6 @@ ImageColorGenerator에서 구현된 이미지 기반 색상 지정 방법을 사
 [example4]: http://amueller.github.io/word_cloud/_images/sphx_glr_masked_002.png
 [example5]: http://amueller.github.io/word_cloud/_images/sphx_glr_frequency_001.png
 [example6]: http://amueller.github.io/word_cloud/_images/sphx_glr_colored_001.png
+[example7]: http://amueller.github.io/word_cloud/_images/sphx_glr_emoji_001.png
+[example8]: http://amueller.github.io/word_cloud/_images/sphx_glr_a_new_hope_001.png
 [GoE]: http://amueller.github.io/word_cloud/auto_examples/index.html
