@@ -14,9 +14,6 @@ Homepage : https://20-1-skku-oss.github.io/2020-1-OSS-5/
 
 ![example][example]
 
-
-![example1][example1]
-
 ## 3. 설치 방법
 
 pip 사용 시, 다음 코드로 진행하시기 바랍니다.:
@@ -77,13 +74,46 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
 's'로 끝나는 단어와 구분하지 못하여, 단어에서 's'가 삭제되는 버그가 발생된다는 문제의 내용이다.
 예를 들어, 'virus'라는 영어단어는 's'로 끝나는데, 단수 자동변환 기능을 설정하면, 'viru'로 취급한다는 문제가 발생된다는 것이다.
 
-
+## 5. 프로젝트 진행과정
+### 프로젝트 선정 과정
+  * 회의를 통해 개인별로 조사한 프로젝트를 발표하고, 팀원들의 의견을 종합하여 프로젝트 선정 (~5/13)
+  * 조사한 프로젝트 중 [word_cloud][word_cloud]와 [free-python-games][free-python-games]로 의견을 종합 (5/13)
+  * 하나의 주제로 팀 프로젝트를 진행한다는 답변을 받아, 추가 회의를 통해 word_cloud를 팀 프로젝트로 선정 (5/22)
+### 역할 분담
+  * 세부 프로젝트를 3가지 정도로 나누어서 역할 분담을 마쳤고, Readme/Wiki/정적페이지 관리는 로테이션을 정해서 팀원 모두가 참여하기로 했습니다.
+  * 역할 분담 내용은 아래와 같습니다.<br><br>
+> 1. 기능을 추가하고 새로운 issue 찾기 (신성국, 안정복, 유광호, 이하은)<br>
+> 2. 페이지에 한글로 문서화하기 (김희성 안정복 유광호 이하은)<br>
+> 3. 한글로 구현하는 기능 추가하기 (김희성, 신성국)<br>
+> 4. Readme/Wiki/정적페이지 관리 (김희성, 신성국, 안정복, 유광호, 이하은)
+### 한글로 word_cloud 구현
+한글 wordcloud 구현을 위한 준비 - 저장소에 한글 기사와 소설 업로드 및 한글 글꼴 파일(NotoSansKR, GmarketSans) 추가<br>
+konlpy 라이브러리를 활용하여 주어진 텍스트 파일에서 단어만 추출하여 띄어쓰기 단위로 구분한 후 하나의 텍스트파일로 다시 구성<br>
+kr_wordcloud2.py 일부 수정 및 추가 구현<br>
+  1. Hannaum --> Hannanum
+  2. ListtoString의 str= " " (띄어쓰기 추가)
+  3. font path 추가
+  4. wordcloud 함수 추가 (~5/30)<br>
+wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
+소설 소나기와 기사 text wordcloud 구현 예시<br>
+![leaves1][leaves1]
+![leaves2][leaves2]
+![leaves3][leaves3]
+### word_cloud 한글 문서화
+word_cloud blog post 앞 부분 한글 문서화 진행 (5.31)<br>
+word_cloud README.md의 Installation 및 word_cloud website의 Command Line Interface 항목 한글 문서화 (6.4)<br>
+word_cloud website의 Gallery of Examples 한글 문서화(6.6)<br>
+word_cloud blog post의 뒷부분 한글 문서화(6.7)
+### Readme/Wiki/정적페이지 관리
+README.md에 설치 방법 추가 (5.28)<br>
+README.md에 기여방법 구체화 (6.6)<br>
+정적페이지 게시물 분류의 필요성으로 Jekyll Theme 변경 (6.7)
 
 [example]: https://github.com/amueller/word_cloud/blob/master/examples/alice.png
-[example1]: https://github.com/amueller/word_cloud/raw/master/examples/constitution.png
-
-
 [issue1]: https://github.com/amueller/word_cloud/issues/238
 [example2]: https://github.com/davidshyn1/davidshyn1.github.io/blob/master/assets/img/word_cloud%ED%95%9C%EA%B8%80%EB%B2%84%EC%A0%84.png
 [issue2]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/issues/2
 [konlpy]: https://github.com/konlpy/konlpy
+[leaves1]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EB%82%98%EB%AD%87%EC%9E%8E.jpg
+[leaves2]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EC%86%8C%EB%82%98%EA%B8%B0_leaves.png
+[leaves3]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EC%86%8C%EB%82%98%EA%B8%B0_leaves_green.png
