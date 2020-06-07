@@ -401,6 +401,436 @@ ImageColorGenerator에서 구현된 이미지 기반 색상 지정 방법을 사
 
 **Script의 총 실행 시간:** ( 0 분  7.464 초)
 
+<hr>
+
+
+경계 map이 있는 이미지 컬러 wordcloud (Image-colored wordcloud with boundary map)
+===========
+이미지의 가장자리를 고려한 약간 더 정교한 이미지 색상의 word cloud 버전입니다. 앵무새 예제와 유사한 이미지를 재생성합니다.
+
+![example10][example10]
+![example11][example11]
+![example12][example12]
+![example13][example13]
+
+    import os
+    from PIL import Image
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.ndimage import gaussian_gradient_magnitude
+
+    from wordcloud import WordCloud, ImageColorGenerator
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    # load wikipedia text on rainbow
+    text = open(os.path.join(d, 'wiki_rainbow.txt')).read()
+
+    # load image. This has been modified in gimp to be brighter and have more saturation.
+    parrot_color = np.array(Image.open(os.path.join(d, "parrot-by-jose-mari-gimenez2.jpg")))
+    # subsample by factor of 3. Very lossy but for a wordcloud we don't really care.
+    parrot_color = parrot_color[::3, ::3]
+
+    # create mask  white is "masked out"
+    parrot_mask = parrot_color.copy()
+    parrot_mask[parrot_mask.sum(axis=2) == 0] = 255
+
+    # some finesse: we enforce boundaries between colors so they get less washed out.
+    # For that we do some edge detection in the image
+    edges = np.mean([gaussian_gradient_magnitude(parrot_color[:, :, i] / 255., 2) for i in range(3)], axis=0)
+    parrot_mask[edges > .08] = 255
+
+    # create wordcloud. A bit sluggish, you can subsample more strongly for quicker rendering
+    # relative_scaling=0 means the frequencies in the data are reflected less
+    # acurately but it makes a better picture
+    wc = WordCloud(max_words=2000, mask=parrot_mask, max_font_size=40, random_state=42, relative_scaling=0)
+
+    # generate word cloud
+    wc.generate(text)
+    plt.imshow(wc)
+
+    # create coloring from image
+    image_colors = ImageColorGenerator(parrot_color)
+    wc.recolor(color_func=image_colors)
+    plt.figure(figsize=(10, 10))
+    plt.imshow(wc, interpolation="bilinear")
+    wc.to_file("parrot_new.png")
+
+    plt.figure(figsize=(10, 10))
+    plt.title("Original Image")
+    plt.imshow(parrot_color)
+
+    plt.figure(figsize=(10, 10))
+    plt.title("Edge map")
+    plt.imshow(edges)
+    plt.show()
+
+**Script의 총 실행 시간:** ( 0 분  24.454 초)
+<hr>
+
+
+중국어로 wordcloud 만들기 (create wordcloud with chinese)
+===========
+Wordcloud는 매우 유용한 도구이지만 중국어 wordcloud를 만들려면 wordcloud만으로는 충분하지 않습니다. 이 파일은 중국어에서 wordcloud를 사용하는 방법을 보여줍니다. 먼저, 중국어 단어 분할 라이브러리 jieba가 필요합니다. jieba는 이제 파이썬에서 가장 우아하고 가장 인기있는 중국어 단어 분할 도구입니다. ‘PIP install jieba’를 사용할 수 있습니다. 설치하십시오. 보시다시피, jieba와 함께 wordcloud를 동시에 사용하면 매우 편리합니다.
+
+![example14][example14]
+![example15][example15]
+
+
+Out:
+
+`````````````````````````````````````````````````````       
+Building prefix dict from the default dictionary ...
+
+Dumping model to file cache /tmp/jieba.cache
+     
+Loading model cost 1.220 seconds.
+        
+Prefix dict has been built successfully.    
+    
+    
+<wordcloud.wordcloud.WordCloud object at 0x7fa0f6e8e7b8>
+
+````````````````````````````````````````````````````` 
+
+
+
+
+
+    import jieba
+    jieba.enable_parallel(4)
+    # Setting up parallel processes :4 ,but unable to run on Windows
+    from os import path
+    from imageio import imread
+    import matplotlib.pyplot as plt
+    import os
+    # jieba.load_userdict("txt\userdict.txt")
+    # add userdict by load_userdict()
+    from wordcloud import WordCloud, ImageColorGenerator
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    stopwords_path = d + '/wc_cn/stopwords_cn_en.txt'
+    # Chinese fonts must be set
+    font_path = d + '/fonts/SourceHanSerif/SourceHanSerifK-Light.otf'
+
+    # the path to save worldcloud
+    imgname1 = d + '/wc_cn/LuXun.jpg'
+    imgname2 = d + '/wc_cn/LuXun_colored.jpg'
+    # read the mask / color image taken from
+    back_coloring = imread(path.join(d, d + '/wc_cn/LuXun_color.jpg'))
+
+    # Read the whole text.
+    text = open(path.join(d, d + '/wc_cn/CalltoArms.txt')).read()
+
+    # if you want use wordCloud,you need it
+    # add userdict by add_word()
+    userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
+
+
+    # The function for processing text with Jieba
+    def jieba_processing_txt(text):
+        for word in userdict_list:
+            jieba.add_word(word)
+
+        mywordlist = []
+        seg_list = jieba.cut(text, cut_all=False)
+        liststr = "/ ".join(seg_list)
+
+        with open(stopwords_path, encoding='utf-8') as f_stop:
+            f_stop_text = f_stop.read()
+            f_stop_seg_list = f_stop_text.splitlines()
+
+        for myword in liststr.split('/'):
+            if not (myword.strip() in f_stop_seg_list) and len(myword.strip()) > 1:
+                mywordlist.append(myword)
+        return ' '.join(mywordlist)
+
+
+    wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, mask=back_coloring,
+                   max_font_size=100, random_state=42, width=1000, height=860, margin=2,)
+
+
+    wc.generate(jieba_processing_txt(text))
+
+    # create coloring from image
+    image_colors_default = ImageColorGenerator(back_coloring)
+
+    plt.figure()
+    # recolor wordcloud and show
+    plt.imshow(wc, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+    # save wordcloud
+    wc.to_file(path.join(d, imgname1))
+
+    # create coloring from image
+    image_colors_byImg = ImageColorGenerator(back_coloring)
+
+    # show
+    # we could also give color_func=image_colors directly in the constructor
+    plt.imshow(wc.recolor(color_func=image_colors_byImg), interpolation="bilinear")
+    plt.axis("off")
+    plt.figure()
+    plt.imshow(back_coloring, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+    # save wordcloud
+    wc.to_file(path.join(d, imgname2))
+
+**Script의 총 실행 시간:** ( 0 분  12.194 초)<hr>
+
+
+중국어로 wordcloud 만들기 (create wordcloud with chinese)
+===========
+Wordcloud는 매우 유용한 도구이지만 중국어 wordcloud를 만들려면 wordcloud만으로는 충분하지 않습니다. 이 파일은 중국어에서 wordcloud를 사용하는 방법을 보여줍니다. 먼저, 중국어 단어 분할 라이브러리 jieba가 필요합니다. jieba는 이제 파이썬에서 가장 우아하고 가장 인기있는 중국어 단어 분할 도구입니다. ‘PIP install jieba’를 사용할 수 있습니다. 설치하십시오. 보시다시피, jieba와 함께 wordcloud를 동시에 사용하면 매우 편리합니다.
+
+![example14][example14]
+![example15][example15]
+
+
+Out:
+
+`````````````````````````````````````````````````````       
+Building prefix dict from the default dictionary ...
+
+Dumping model to file cache /tmp/jieba.cache
+     
+Loading model cost 1.220 seconds.
+        
+Prefix dict has been built successfully.    
+    
+    
+<wordcloud.wordcloud.WordCloud object at 0x7fa0f6e8e7b8>
+
+````````````````````````````````````````````````````` 
+
+
+
+
+
+    import jieba
+    jieba.enable_parallel(4)
+    # Setting up parallel processes :4 ,but unable to run on Windows
+    from os import path
+    from imageio import imread
+    import matplotlib.pyplot as plt
+    import os
+    # jieba.load_userdict("txt\userdict.txt")
+    # add userdict by load_userdict()
+    from wordcloud import WordCloud, ImageColorGenerator
+
+    # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+
+    stopwords_path = d + '/wc_cn/stopwords_cn_en.txt'
+    # Chinese fonts must be set
+    font_path = d + '/fonts/SourceHanSerif/SourceHanSerifK-Light.otf'
+
+    # the path to save worldcloud
+    imgname1 = d + '/wc_cn/LuXun.jpg'
+    imgname2 = d + '/wc_cn/LuXun_colored.jpg'
+    # read the mask / color image taken from
+    back_coloring = imread(path.join(d, d + '/wc_cn/LuXun_color.jpg'))
+
+    # Read the whole text.
+    text = open(path.join(d, d + '/wc_cn/CalltoArms.txt')).read()
+
+    # if you want use wordCloud,you need it
+    # add userdict by add_word()
+    userdict_list = ['阿Ｑ', '孔乙己', '单四嫂子']
+
+
+    # The function for processing text with Jieba
+    def jieba_processing_txt(text):
+        for word in userdict_list:
+            jieba.add_word(word)
+
+        mywordlist = []
+        seg_list = jieba.cut(text, cut_all=False)
+        liststr = "/ ".join(seg_list)
+
+        with open(stopwords_path, encoding='utf-8') as f_stop:
+            f_stop_text = f_stop.read()
+            f_stop_seg_list = f_stop_text.splitlines()
+
+        for myword in liststr.split('/'):
+            if not (myword.strip() in f_stop_seg_list) and len(myword.strip()) > 1:
+                mywordlist.append(myword)
+        return ' '.join(mywordlist)
+
+
+    wc = WordCloud(font_path=font_path, background_color="white", max_words=2000, mask=back_coloring,
+                   max_font_size=100, random_state=42, width=1000, height=860, margin=2,)
+
+
+    wc.generate(jieba_processing_txt(text))
+
+    # create coloring from image
+    image_colors_default = ImageColorGenerator(back_coloring)
+
+    plt.figure()
+    # recolor wordcloud and show
+    plt.imshow(wc, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+    # save wordcloud
+    wc.to_file(path.join(d, imgname1))
+
+    # create coloring from image
+    image_colors_byImg = ImageColorGenerator(back_coloring)
+
+    # show
+    # we could also give color_func=image_colors directly in the constructor
+    plt.imshow(wc.recolor(color_func=image_colors_byImg), interpolation="bilinear")
+    plt.axis("off")
+    plt.figure()
+    plt.imshow(back_coloring, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+    # save wordcloud
+    wc.to_file(path.join(d, imgname2))
+
+**Script의 총 실행 시간:** ( 0 분  12.194 초)
+<hr>
+
+
+그룹 예시에 의한 채색 (Colored by Group Example)
+===========
+색상에서 단어로의 사전 정의된 mapping을 기반으로 단어에 색상을 지정하는 word cloud 생성
+
+![example16][example16]
+
+    from wordcloud import (WordCloud, get_single_color_func)
+    import matplotlib.pyplot as plt
+
+
+    class SimpleGroupedColorFunc(object):
+        """Create a color function object which assigns EXACT colors
+           to certain words based on the color to words mapping
+
+           Parameters
+           ----------
+           color_to_words : dict(str -> list(str))
+             A dictionary that maps a color to the list of words.
+
+           default_color : str
+             Color that will be assigned to a word that's not a member
+             of any value from color_to_words.
+        """
+
+        def __init__(self, color_to_words, default_color):
+            self.word_to_color = {word: color
+                                  for (color, words) in color_to_words.items()
+                                  for word in words}
+
+            self.default_color = default_color
+
+        def __call__(self, word, **kwargs):
+            return self.word_to_color.get(word, self.default_color)
+
+
+    class GroupedColorFunc(object):
+        """Create a color function object which assigns DIFFERENT SHADES of
+           specified colors to certain words based on the color to words mapping.
+
+           Uses wordcloud.get_single_color_func
+
+           Parameters
+           ----------
+           color_to_words : dict(str -> list(str))
+             A dictionary that maps a color to the list of words.
+
+           default_color : str
+             Color that will be assigned to a word that's not a member
+             of any value from color_to_words.
+        """
+
+        def __init__(self, color_to_words, default_color):
+            self.color_func_to_words = [
+                (get_single_color_func(color), set(words))
+                for (color, words) in color_to_words.items()]
+
+            self.default_color_func = get_single_color_func(default_color)
+
+        def get_color_func(self, word):
+            """Returns a single_color_func associated with the word"""
+            try:
+                color_func = next(
+                    color_func for (color_func, words) in self.color_func_to_words
+                    if word in words)
+            except StopIteration:
+                color_func = self.default_color_func
+
+            return color_func
+
+        def __call__(self, word, **kwargs):
+            return self.get_color_func(word)(word, **kwargs)
+
+
+    text = """The Zen of Python, by Tim Peters
+    Beautiful is better than ugly.
+    Explicit is better than implicit.
+    Simple is better than complex.
+    Complex is better than complicated.
+    Flat is better than nested.
+    Sparse is better than dense.
+    Readability counts.
+    Special cases aren't special enough to break the rules.
+    Although practicality beats purity.
+    Errors should never pass silently.
+    Unless explicitly silenced.
+    In the face of ambiguity, refuse the temptation to guess.
+    There should be one-- and preferably only one --obvious way to do it.
+    Although that way may not be obvious at first unless you're Dutch.
+    Now is better than never.
+    Although never is often better than *right* now.
+    If the implementation is hard to explain, it's a bad idea.
+    If the implementation is easy to explain, it may be a good idea.
+    Namespaces are one honking great idea -- let's do more of those!"""
+
+    # Since the text is small collocations are turned off and text is lower-cased
+    wc = WordCloud(collocations=False).generate(text.lower())
+
+    color_to_words = {
+        # words below will be colored with a green single color function
+        '#00ff00': ['beautiful', 'explicit', 'simple', 'sparse',
+                    'readability', 'rules', 'practicality',
+                    'explicitly', 'one', 'now', 'easy', 'obvious', 'better'],
+        # will be colored with a red single color function
+        'red': ['ugly', 'implicit', 'complex', 'complicated', 'nested',
+                'dense', 'special', 'errors', 'silently', 'ambiguity',
+                'guess', 'hard']
+    }
+
+    # Words that are not in any of the color_to_words values
+    # will be colored with a grey single color function
+    default_color = 'grey'
+
+    # Create a color function with single tone
+    # grouped_color_func = SimpleGroupedColorFunc(color_to_words, default_color)
+
+    # Create a color function with multiple tones
+    grouped_color_func = GroupedColorFunc(color_to_words, default_color)
+
+    # Apply our color function
+    wc.recolor(color_func=grouped_color_func)
+
+    # Plot
+    plt.figure()
+    plt.imshow(wc, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+**Script의 총 실행 시간:** ( 0 분  0.315 초)
+
 [example]: http://amueller.github.io/word_cloud/_images/sphx_glr_single_word_001.png
 [example1]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_001.png
 [example2]: http://amueller.github.io/word_cloud/_images/sphx_glr_simple_002.png
@@ -410,4 +840,12 @@ ImageColorGenerator에서 구현된 이미지 기반 색상 지정 방법을 사
 [example6]: http://amueller.github.io/word_cloud/_images/sphx_glr_colored_001.png
 [example7]: http://amueller.github.io/word_cloud/_images/sphx_glr_emoji_001.png
 [example8]: http://amueller.github.io/word_cloud/_images/sphx_glr_a_new_hope_001.png
+[example9]: http://amueller.github.io/word_cloud/_images/sphx_glr_a_new_hope_002.png
+[example10]: http://amueller.github.io/word_cloud/_images/sphx_glr_parrot_001.png
+[example11]: http://amueller.github.io/word_cloud/_images/sphx_glr_parrot_002.png
+[example12]: http://amueller.github.io/word_cloud/_images/sphx_glr_parrot_003.png
+[example13]: http://amueller.github.io/word_cloud/_images/sphx_glr_parrot_004.png
+[example14]: http://amueller.github.io/word_cloud/_images/sphx_glr_wordcloud_cn_001.png
+[example15]: http://amueller.github.io/word_cloud/_images/sphx_glr_wordcloud_cn_002.png
+[example16]: http://amueller.github.io/word_cloud/_images/sphx_glr_colored_by_group_001.png
 [GoE]: http://amueller.github.io/word_cloud/auto_examples/index.html
