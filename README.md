@@ -81,12 +81,12 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
   * 하나의 주제로 팀 프로젝트를 진행한다는 답변을 받아, 추가 회의를 통해 word_cloud를 팀 프로젝트로 선정 (5/22)
 ### 한글로 word_cloud 구현
   * 한글 wordcloud 구현을 위한 준비 - 저장소에 한글 기사와 소설 업로드 및 한글 글꼴 파일(NotoSansKR, GmarketSans) 추가<br>
-  * konlpy 라이브러리를 활용하여 주어진 텍스트 파일에서 단어만 추출 / 띄어쓰기 단위로 구분한 후 하나의 텍스트파일로 다시 구성<br>
+  * konlpy 라이브러리를 활용하여 주어진 텍스트 파일에서 단어 추출 / 띄어쓰기 단위로 구분한 후 하나의 텍스트파일로 다시 구성<br>
   * kr_wordcloud2.py 일부 수정 및 추가 구현<br>
 > 1. Hannaum --> Hannanum<br>
 > 2. ListtoString의 str= " " (띄어쓰기 추가)<br>
 > 3. font path 추가<br>
-> 4. wordcloud 함수 추가
+> 4. wordcloud 함수 추가<br>
 wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
 소설 소나기와 기사 text wordcloud 구현 예시<br>
 ![leaves][leaves]
