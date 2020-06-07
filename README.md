@@ -90,8 +90,6 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
 wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
 소설 소나기와 기사 text wordcloud 구현 예시<br>
 ![leaves1][leaves1]
-![leaves2][leaves2]
-![leaves3][leaves3]
 ### word_cloud 한글 문서화
 Blog Post 앞 부분 한글 문서화 진행[(click)] (5.31)<br>
 README.md Installation / word_cloud website의 Command Line Interface 항목 한글 문서화[(click)] (6.4)<br>
@@ -109,6 +107,4 @@ README.md에 프로젝트 기여 방법 구체화 (6.6)<br>
 [konlpy]: https://github.com/konlpy/konlpy
 [word_cloud]: https://github.com/amueller/word_cloud
 [free-python-games]: https://github.com/grantjenks/free-python-games
-[leaves1]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EB%82%98%EB%AD%87%EC%9E%8E.jpg
-[leaves2]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EC%86%8C%EB%82%98%EA%B8%B0_leaves.png
-[leaves3]: https://github.com/20-1-SKKU-OSS/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EC%86%8C%EB%82%98%EA%B8%B0_leaves_green.png
+[leaves]: https://github.com/jb0307/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EB%82%98%EB%AD%87%EC%9E%8E%EB%B9%84%EA%B5%90.jpg
