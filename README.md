@@ -89,7 +89,7 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
 > 4. wordcloud 함수 추가
 wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
 소설 소나기와 기사 text wordcloud 구현 예시<br>
-![leaves1][leaves1]
+![leaves][leaves]
 ### word_cloud 한글 문서화
 Blog Post 앞 부분 한글 문서화 진행[(click)] (5.31)<br>
 README.md Installation / word_cloud website의 Command Line Interface 항목 한글 문서화[(click)] (6.4)<br>
