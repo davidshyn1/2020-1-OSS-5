@@ -4,7 +4,7 @@ title: "[한글 문서화] Installation & Command Line Interface"
 author: "OSS-5"
 ---
 
->word_cloud README.md의 [Installation][Install] 항목과 word_cloud GitHub Page의 [Command Line Interface][CLI] 항목을 번역 및 보완한 문서입니다.
+>word_cloud README.md의 [Installation][Install] 항목과 word_cloud GitHub Page의 [Command Line Interface][CLI] 항목을 한국어로 번역 및 보완한 문서입니다.
 <hr>
 
 ## word_cloud 설치

@@ -5,12 +5,12 @@ from konlpy.tag import Hannanum
 from wordcloud import WordCloud
 
 """This code is to generate and to plot a wordcloud in Korean version. 
-Of course it is possible to generate a simple wordcloud with the original codes, however
+Of course it is possible to generate a simple wordcloud with the original codes. However
 due to the major difference with English and complexity, the result from the original codes will not
 be as perfect as we expected.
 
-The major difference between English and Korean(Hangul) is that English can divide words by space(' ')
-while Korean cannot divide words by space. To make a Korean sentence, every single noun has to combine with
+The major difference between English and Korean(Hangul) is that English words can be devided by space(' ')
+while Korean words cannot be divided by space. To make a Korean sentence, every single noun has to be combined with
 articles without space(ex. I am --> 나는, 나:I 는:am).
 
 For this reason, even though the text want to say 'I' in every appearance as '나는','나를', '나에게',
@@ -43,12 +43,7 @@ def get_string(path):
     list_nouns = h.nouns(sample) #get list of nouns from sample
     return listToString(list_nouns) #get string of list_nouns
 
-<<<<<<< HEAD:kr_wordcloud_simple.py
 path = d + '/word_cloud/kor_text/황순원_소나기.txt'
-=======
-path = d + '/word_cloud/kor_text/2020.05.28.기사1.txt' #path of korean text
->>>>>>> master:kr_wordcloud2.py
-
 tags = get_string(path)  # tags : string of list_nouns
 wc = WordCloud(font_path=font_path, background_color="white",collocations=False,
                max_font_size=100, random_state=42, width=1000, height=860, margin=2) #collocations=false

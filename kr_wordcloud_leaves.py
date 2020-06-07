@@ -1,17 +1,18 @@
 import os
 
 from os import path
+from imageio import imread
 from konlpy.tag import Hannanum
 from wordcloud import WordCloud, ImageColorGenerator
-from imageio import imread
 
 """This code is to generate and to plot a wordcloud in Korean version. 
-Of course it is possible to generate a simple wordcloud with the original codes, however
+Of course it is possible to generate a simple wordcloud with the original codes. However
 due to the major difference with English and complexity, the result from the original codes will not
 be as perfect as we expected.
 
-The major difference between English and Korean(Hangul) is that English can divide words by space(' ')
-while Korean cannot divide words by space. To make a Korean sentence, every single noun has to combine with
+The major difference between English and Korean(Hangul) is that English words can be devided by space(' ')
+while Korean words cannot be divided by space. To make a Korean sentence, every single noun has to be combined with
+
 articles without space(ex. I am --> 나는, 나:I 는:am).
 
 For this reason, even though the text want to say 'I' in every appearance as '나는','나를', '나에게',
@@ -22,14 +23,16 @@ the original codes will separate these words as a different meaning and a differ
 It provides a function with separating the main words and articles, and only extract the main words."""
 
 """So don't forget to install konlpy package!"""
+
 # get data directory (using getcwd() is needed to support running example in generated IPython notebook)
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
+#read the color image taken from
+back_coloring = imread(path.join(d, d + '/word_cloud/kor_text/image/나뭇잎.jpg'))
+
+
 #get the path of Korean_fonts otf file
 font_path = d + '/word_cloud/examples/fonts/NotoSansKR/NotoSansKR-Black.otf'
-
-# read the mask / color image taken from
-back_coloring = imread(path.join(d, d+'/word_cloud/kor_text/image/나뭇잎.jpg'))
 
 def listToString(list1):
     str=" " #distinguish nouns by 'space'
@@ -44,20 +47,18 @@ def get_string(path):
     list_nouns = h.nouns(sample) #get list of nouns from sample
     return listToString(list_nouns) #get string of list_nouns
 
-path = d + '/word_cloud/kor_text/황순원_소나기.txt'
+path = d + '/word_cloud/kor_text/황순원_소나기.txt' #path of korean text
 
 tags = get_string(path)  # tags : string of list_nouns
 wc = WordCloud(font_path=font_path, background_color="white",collocations=False, mask=back_coloring,
-               max_font_size=100, random_state=42, width=1000, height=860, margin=2)
+               max_font_size=100, random_state=42, width=1000, height=860, margin=2) #collocations=false
 
 #display the generated image
 wordcloud = wc.generate(tags)
-# create coloring from image
-image_colors_byImg = ImageColorGenerator(back_coloring)
-
 import matplotlib.pyplot as plt
-# recolor wordcloud and show
-# we could also give color_func=image_colors directly in the constructor
-plt.imshow(wc.recolor(color_func=image_colors_byImg), interpolation="bilinear")
+
+plt.imshow(wordcloud, interpolation ='bilinear')
+#image_colors_byImg = ImageColorGenerator(back_coloring)
+#plt.imshow(wordcloud.recolor(color_func=image_colors_byImg), interpolation='bilinear')
 plt.axis("off")
 plt.show()
