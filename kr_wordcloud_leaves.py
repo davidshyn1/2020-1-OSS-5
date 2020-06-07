@@ -12,6 +12,7 @@ be as perfect as we expected.
 
 The major difference between English and Korean(Hangul) is that English words can be devided by space(' ')
 while Korean words cannot be divided by space. To make a Korean sentence, every single noun has to be combined with
+
 articles without space(ex. I am --> 나는, 나:I 는:am).
 
 For this reason, even though the text want to say 'I' in every appearance as '나는','나를', '나에게',
@@ -19,7 +20,6 @@ the original codes will separate these words as a different meaning and a differ
 '"""
 
 """To implement the codes, you must install konlpy package which is a module for natural language processing for Korean.
-
 It provides a function with separating the main words and articles, and only extract the main words."""
 
 """So don't forget to install konlpy package!"""
