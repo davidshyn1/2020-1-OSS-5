@@ -410,4 +410,5 @@ ImageColorGenerator에서 구현된 이미지 기반 색상 지정 방법을 사
 [example6]: http://amueller.github.io/word_cloud/_images/sphx_glr_colored_001.png
 [example7]: http://amueller.github.io/word_cloud/_images/sphx_glr_emoji_001.png
 [example8]: http://amueller.github.io/word_cloud/_images/sphx_glr_a_new_hope_001.png
+[example9]: http://amueller.github.io/word_cloud/_images/sphx_glr_a_new_hope_002.png
 [GoE]: http://amueller.github.io/word_cloud/auto_examples/index.html
