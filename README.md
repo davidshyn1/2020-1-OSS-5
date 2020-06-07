@@ -88,17 +88,17 @@ Word Cloud 프로젝트는 긴 글(문장)을 tokenize 수행하여, 단어 등�
 > 3. font path 추가<br>
 > 4. wordcloud 함수 추가<br>
   * wordcloud plotting에 대한 코드 구현 마무리 및 선택한 이미지파일에 wordcloud를 그리는 코드를 추가 구현 (~6/6)<br>
-> 소설 소나기의 wordcloud 구현 예시<br>
+> 소설 소나기와 나뭇잎 이미지의 wordcloud 구현 예시<br>
 > ![leaves][leaves]
 ### word_cloud 한글 문서화
-Blog Post 앞 부분 한글 문서화 진행[(click)][doc1] (5.31)<br>
-README.md Installation / word_cloud website의 Command Line Interface 항목 한글 문서화[(click)][doc2] (6.4)<br>
-word_cloud website의 Gallery of Examples 한글 문서화[(click)][doc3] (6.6)<br>
-Blog Post 뒷 부분 한글 문서화[(click)][doc4] (6.7)
+* Blog Post 앞 부분 한글 문서화 진행[(click)][doc1] (5/31)<br>
+* word_cloud website의 Command Line Interface 항목 한글 문서화[(click)][doc2] (6/4)<br>
+* word_cloud website의 Gallery of Examples 항목 한글 문서화[(click)][doc3] (6/6)<br>
+* Blog Post 뒷 부분 한글 문서화[(click)][doc4] (6/7)
 ### Readme/Wiki/정적페이지 관리
-README.md에 word_cloud 설치 방법 추가 (5.28)<br>
-README.md에 프로젝트 기여 방법 구체화 (6.6)<br>
-정적페이지 게시물 분류의 필요성으로 Jekyll Theme 변경 (6.7)
+* README.md에 word_cloud 설치 방법 추가 (5/28)<br>
+* README.md에 프로젝트 기여 방법 구체화 (6/6)<br>
+* 정적페이지 게시물 분류의 필요성으로 Jekyll Theme 변경 (6/7)
 
 [example]: https://github.com/amueller/word_cloud/blob/master/examples/alice.png
 [issue1]: https://github.com/amueller/word_cloud/issues/238
@@ -107,7 +107,7 @@ README.md에 프로젝트 기여 방법 구체화 (6.6)<br>
 [konlpy]: https://github.com/konlpy/konlpy
 [word_cloud]: https://github.com/amueller/word_cloud
 [free-python-games]: https://github.com/grantjenks/free-python-games
-[leaves]: https://github.com/jb0307/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EB%82%98%EB%AD%87%EC%9E%8E%EB%B9%84%EA%B5%90.jpg
+[leaves]: https://github.com/20-1-skku-oss/2020-1-OSS-5/blob/master/word_cloud/kor_text/image/%EB%82%98%EB%AD%87%EC%9E%8E%EB%B9%84%EA%B5%90.jpg
 [doc1]: https://20-1-skku-oss.github.io/2020-1-OSS-5/blog-post/
 [doc2]: https://20-1-skku-oss.github.io/2020-1-OSS-5/installation-and-command-line-interface
 [doc3]: https://20-1-skku-oss.github.io/2020-1-OSS-5/Gallery-of-Examples/
